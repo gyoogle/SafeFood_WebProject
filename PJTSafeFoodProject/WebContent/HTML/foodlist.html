@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<!-- Bootstrap -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style type="text/css">
+footer {
+	background-color: rgb(255, 201, 14);
+}
+
+body {
+	padding-top: 130px;
+	padding-bottom: 150px;
+}
+
+.navbar-with-logo {
+	min-height: 90px;
+	background-color: rgb(255, 201, 14);
+}
+
+.navbar-brand {
+	height: 90px;
+}
+
+.navber-nav li {
+	display: inline-block;
+}
+
+.navber-nav li a {
+	color: white;
+	font-weight: bold;
+}
+
+.navber-nav li a:hover {
+	color: black;
+}
+
+.navbar-footer {
+	background-color: rgb(255, 201, 14);
+	padding: 20px;
+	font-weight: bold;
+}
+
+.navbar-footer span {
+	margin-right: 20px;
+}
+
+.btn-light {
+	background-color: white;
+	color: black;
+	font-weight: bold;
+}
+
+.btn-dark {
+	background-color: black;
+	color: white;
+	font-weight: bold;
+}
+
+.main-content {
+	padding-top: 40px;
+	padding-botton: 10px;
+}
+
+.main-contents {
+	padding-top: 30px;
+	text-align: center;
+}
+
+.main-contents .form-group {
+	text-align: left;
+}
+
+.item-lists a {
+	background-color: rgb(255, 201, 14);
+	color
+	=
+	black;
+}
+</style>
+<script type="text/javascript">
+	function success() {
+		alert("가입 성공!");
+		location.replace('main.html');
+	}
+	function main() {
+		location.replace('main.html');
+	}
+
+	function join() {
+		location.replace('join.html');
+	}
+	function main_login() {
+		location.replace('login.html');
+	}
+	$(document).ready(function() {
+		$.ajax({
+			url : "../res/foodInfo.xml",
+			dataType : 'xml',
+			success : function(result) {
+				$(result).find("food").each(function(){
+					var print = '<li><div class="container item-info"><img class="col-md-2 col-sm-2 col-lg-2" src="';
+					print += $(this).find("image").text();
+					print += '"> <div class="container col-md-10 col-sm-10 col-lg-10"> <h2 style="margin-bottom: 10px;">';
+					print += $(this).find("name").text();
+					print += '</h2><hr style="margin-top: 5px;"><p>';
+					print += $(this).find("maker").text();
+					print += '</p><p>';
+					print += $(this).find("material").text();
+					print += '</p><a href="detail.html?code=';
+					print += $(this).find("code").text();
+					print += '" class="btn col-md-4 col-sm-4 col-lg-4">상품 정보 보기</a>';
+					print += '<a href="#"class="btn col-md-4 col-sm-4 col-lg-4 col-md-offset-1 col-sm-offset-1 col-lg-offset-1">찜하기</a></div></div></li>'
+					$("#print-itemlist").append(print);
+				});	
+			}
+		});
+		
+	});
+</script>
+</head>
+<header>
+	<div>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<!-- 위의 노란색 부분 -->
+			<div class="container-fulid">
+				<div class="navbar-with-logo">
+					<div class="container">
+						<a class="navbar-brand" href="main.html"> <img
+							src="../img/logo4.png" alt="..." height="70px">
+						</a>
+						<div class="navbar-right" style="margin: 30px;">
+							<ul class="nav navbar-nav">
+								<li style="padding-right: 10px">
+									<button type="button" class="btn btn-light"
+										onclick="main_login()">로그인</button>
+								</li>
+								<li style="padding-right: 10px">
+									<button type="button" class="btn btn-dark" onclick="join()">회원가입</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 아래 검정색 부분 -->
+			<div class="container">
+				<div class="navbar-header">
+					<!-- 모바일 상태에서 三아이콘:웹화면에서는 보이지 않음 -->
+					<!-- 크기가 작아질 경우, 메뉴를 아이콘 안으로 넣는다. span은 단추모양 지정.-->
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-ex11-collapse">
+						<!-- 아래 클래스 지정 -->
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<!-- 로고 -->
+				</div>
+				<div class="navbar-right navbar-ex11-collapse navber-collapse ">
+					<ul class="nav navber-nav">
+						<li><a href="#">상품 정보</a></li>
+						<li><a href="#">베스트 섭취 정보</a></li>
+						<li><a href="#">내 섭취 정보</a></li>
+						<li><a href="#">예상 섭취 정보</a></li>
+						<li><a href="#">공지 사항</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+</header>
+<body>
+
+	<div class="container">
+		<div class="container main-contents">
+			<div
+				class="form-group col-sm-3 col-sm-offset-2 col-md-3 col-md-offset-2 col-lg-3 col-lg-offset-2"
+				style="display: inline-block;">
+				<label for="sel1">검색 조건</label> <select class="form-control"
+					id="sel1">
+					<option>제품명</option>
+					<option>제조사</option>
+					<option>원재료</option>
+					<option>알레르기 성분</option>
+				</select>
+			</div>
+			<div class="form-group col-sm-5 col-md-5 col-lg-5">
+				<label for="sel2">검색 단어</label>
+				<div id="sel2">
+					<input type="text" class="form-control"
+						style="width: 80%; display: inline-block;" id="search_word">
+					<a href="search.html" type = "button"class="btn btn-dark" style="display: inline;" id ="search_btn">검색</a>
+				</div>
+			</div>
+		</div>
+		<hr style="margin-top: 5px;">
+		<div class="container item-lists">
+			<ul id="print-itemlist" style="list-style: none;">
+				
+			</ul>
+		</div>
+	</div>
+
+
+</body>
+<footer>
+	<nav class="navbar-footer navbar navbar-fixed-bottom" role="navigation">
+		<div class="navbar-left">
+			<p style="font-size: 20pt;">Find us</p>
+			<hr style="margin: 5px 0px;">
+			<span><img src="../img/telephone_icon.png" height="20pt">
+				010-1234-5678</span> <span><img src="../img/location_icon.png"
+				height="20pt"> 서울 강남구 테헤란로</span>
+		</div>
+	</nav>
+</footer>
+</html>

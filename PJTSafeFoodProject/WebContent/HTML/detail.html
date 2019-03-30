@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.min.js"></script>
+	
+<style type="text/css">
+footer {
+	background-color: rgb(255, 201, 14);
+}
+
+body {
+	padding-top: 130px;
+	padding-bottom: 150px;
+}
+
+.navbar-with-logo {
+	min-height: 90px;
+	background-color: rgb(255, 201, 14);
+}
+
+.navbar-brand {
+	height: 90px;
+}
+
+.navber-nav li {
+	display: inline-block;
+}
+
+.navber-nav li a {
+	color: white;
+	font-weight: bold;
+}
+
+.navber-nav li a:hover {
+	color: black;
+}
+
+.navbar-footer {
+	background-color: rgb(255, 201, 14);
+	padding: 20px;
+	font-weight: bold;
+}
+
+.navbar-footer span {
+	margin-right: 20px;
+}
+
+.btn-light {
+	background-color: white;
+	color: black;
+	font-weight: bold;
+}
+
+.btn-dark {
+	background-color: black;
+	color: white;
+	font-weight: bold;
+}
+
+.main-content {
+	padding-top: 70px;
+	padding-botton: 50px;
+}
+
+.main-contents {
+	margin: 50px auto;
+	padding: 20px 0px;
+	text-align: center;
+}
+
+.main-contents .form-group {
+	text-align: left;
+}
+
+.info-title {
+	padding: 20px;
+}
+.table-title {
+	width: 150px; 
+	font-weight: bold;
+}
+</style>
+<script type="text/javascript">
+	
+	function success() {
+		alert("가입 성공!");
+		location.replace('main.html');
+	}
+	function main() {
+		location.replace('main.html');
+	}
+
+	function join() {
+		location.replace('join.html');
+	}
+	function main_login() {
+		location.replace('login.html');
+	}
+	$(document).ready(function() {
+		var num = $(location).attr('search').split("=")[1];
+		var name;
+		var allergy = ["대두","땅콩","우유","게","새우","참치","연어","쑥","소고기","닭고기","돼지고기","복숭아","민들레","계란흰자"];
+		var nutrients;
+		
+		$.ajax({
+			url : "../res/foodInfo.xml",
+			dataType: "xml",
+			success: function(result) {
+				$(result).find("food").each(function(){
+					if(num == $(this).find("code").text()) {
+						name = $(this).find("name").text();
+						$("#product-image").attr("src", $(this).find("image").text());
+						$("#product-name").html(name);
+						$("#product-maker").html($(this).find("maker").text());
+						$("#product-material").html($(this).find("material").text());
+						var algy = ""; 
+						for(var i in allergy) {
+							if($(this).find('material').text().includes(i)) {
+								algy += allergy[i] + " ";
+							}
+						}
+						$("#product-allergy").html(algy);
+					}
+				});	
+			}
+		});
+		
+		$.ajax({
+			url : "../res/FoodNutritionInfo2.xml",
+			dataType: "xml",
+			success: function(result) {
+				$(result).find("item").each(function() {
+					if(name == $(this).find("DESC_KOR").text()) {
+						nutrients = [Number($(this).find("NUTR_CONT2").text()), Number($(this).find("NUTR_CONT3").text()), Number($(this).find("NUTR_CONT4").text()), 
+							Number($(this).find("NUTR_CONT5").text()), Number($(this).find("NUTR_CONT6").text()), Number($(this).find("NUTR_CONT7").text()), 
+							Number($(this).find("NUTR_CONT8").text()), Number($(this).find("NUTR_CONT9").text())];
+						$("#daily").html($(this).find("SERVING_WT").text());
+						$("#calrory").html($(this).find("NUTR_CONT1").text());
+						$("#tan").html(nutrients[0]);
+						$("#dan").html(nutrients[1]);
+						$("#ji").html(nutrients[2]);
+						$("#dang").html(nutrients[3]);
+						$("#na").html(nutrients[4]);
+						$("#cole").html(nutrients[5]);
+						$("#po").html(nutrients[6]);
+						$("#trans").html(nutrients[7]);
+						
+						var nutrient_chart = document.getElementById("nutrient_chart");
+						var nutri_chart = new Chart(nutrient_chart, {
+							type : 'doughnut',
+							data : {
+								labels : ["탄수화물", "단백질", "지방", "당류", "나트륩", "콜레스트롤", "포화지방산", "트랜스지방"],
+								datasets : [{
+									label : '영양 정보',
+									data : [Number($("#daily").html()), Number($(this).find("NUTR_CONT3").text()), Number($(this).find("NUTR_CONT4").text()), 
+										Number($(this).find("NUTR_CONT5").text()), Number($(this).find("NUTR_CONT6").text()), Number($(this).find("NUTR_CONT7").text()), 
+										Number($(this).find("NUTR_CONT8").text()), Number($(this).find("NUTR_CONT9").text())],
+									backgroundColor : ["#F6E3CE", "#F5F6CE", "#E3F6CE", "#D8F6CE", "#CEF6D8", "#CEF6F5", "#CECEF6", "#F6CEE3"]
+								}]
+							}
+						});
+					}
+				});
+			}
+		});
+				
+		
+		
+	});
+		
+		
+</script>
+</head>
+<header>
+	<div>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<!-- 위의 노란색 부분 -->
+			<div class="container-fulid">
+				<div class="navbar-with-logo">
+					<div class="container">
+						<a class="navbar-brand" href="main.html"> <img
+							src="../img/logo4.png" alt="..." height="70px">
+						</a>
+						<div class="navbar-right" style="margin: 30px;">
+							<ul class="nav navbar-nav">
+								<li style="padding-right: 10px">
+									<button type="button" class="btn btn-light"
+										onclick="main_login()">로그인</button>
+								</li>
+								<li style="padding-right: 10px">
+									<button type="button" class="btn btn-dark" onclick="join()">회원가입</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 아래 검정색 부분 -->
+			<div class="container">
+				<div class="navbar-header">
+					<!-- 모바일 상태에서 三아이콘:웹화면에서는 보이지 않음 -->
+					<!-- 크기가 작아질 경우, 메뉴를 아이콘 안으로 넣는다. span은 단추모양 지정.-->
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target=".navbar-ex11-collapse">
+						<!-- 아래 클래스 지정 -->
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<!-- 로고 -->
+				</div>
+				<div class="navbar-right navbar-ex11-collapse navber-collapse ">
+					<ul class="nav navber-nav">
+						<li><a href="foodlist.html">상품 정보</a></li>
+						<li><a href="#">베스트 섭취 정보</a></li>
+						<li><a href="#">내 섭취 정보</a></li>
+						<li><a href="#">예상 섭취 정보</a></li>
+						<li><a href="#">공지 사항</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+</header>
+<body>
+	<div style="text-align: center;" class="container">
+		<div class="container div-product-info">
+			<div class="info-title">
+				<img src="../img/shopping_icon.png" height="45pt"> <span
+					style="font-size: 30pt;">제품 정보</span>
+			</div>
+			<div class="container info-content">
+				<img id="product-image" class="col-md-2 col-sm-2 col-lg-2">
+				<div class="container  col-md-9 col-sm-9 col-lg-9">
+					<table class="table">
+						<tr>
+							<td class="table-title">제품명</td>
+							<td id="product-name"></td>
+						</tr>
+						<tr>
+							<td class="table-title">제조사</td>
+							<td id="product-maker"></td>
+						</tr>
+						<tr>
+							<td class="table-title">원재료</td>
+							<td id="product-material"></td>
+						</tr>
+						<tr>
+							<td class="table-title">알레르기 성분</td>
+							<td id="product-allergy"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="container div-nutritent-info">
+			<div class="info-title">
+				<img src="../img/information_icon.png" height="45pt"> <span
+					style="font-size: 30pt;">영양 정보</span>
+			</div>
+			<div class="container info-content">
+				<canvas id="nutrient_chart" style="width: 367px; height: 183px; display: inline-block; padding: 20px;"></canvas>
+				<div class="container">
+					<table class="table">
+						<tr>
+							<td class="table-title">일일 제공량</td>
+							<td id="daily"></td>
+						</tr>
+						<tr>
+							<td class="table-title">칼로리</td>
+							<td id="calrory"></td>
+						</tr>
+						<tr>
+							<td class="table-title">탄수화물</td>
+							<td id="tan"></td>
+						</tr>
+						<tr>
+							<td class="table-title">단백질</td>
+							<td id="dan"></td>
+						</tr>
+						<tr>
+							<td class="table-title">지방</td>
+							<td id="ji"></td>
+						</tr>
+						<tr>
+							<td class="table-title">당류</td>
+							<td id="dang"></td>
+						</tr>
+						<tr>
+							<td class="table-title">나트륨</td>
+							<td id="na"></td>
+						</tr>
+						<tr>
+							<td class="table-title">콜레스테롤</td>
+							<td id="cole"></td>
+						</tr>
+						<tr>
+							<td class="table-title">포화지방산</td>
+							<td id="po"></td>
+						</tr>
+						<tr>
+							<td class="table-title">트랜스지방</td>
+							<td id="trans"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+<footer>
+	<nav class="navbar-footer navbar navbar-fixed-bottom" role="navigation">
+		<div class="navbar-left">
+			<p style="font-size: 20pt;">Find us</p>
+			<hr style="margin: 5px 0px;">
+			<span><img src="../img/telephone_icon.png" height="20pt">
+				010-1234-5678</span> <span><img src="../img/location_icon.png"
+				height="20pt"> 서울 강남구 테헤란로</span>
+		</div>
+	</nav>
+</footer>
+</html>

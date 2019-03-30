@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<!-- Bootstrap -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style type="text/css">
+footer {
+	background-color: rgb(255, 201, 14);
+}
+
+body {
+	padding-top: 130px;
+	padding-bottom: 90px;
+}
+
+.navbar-with-logo {
+	min-height: 90px;
+	background-color: rgb(255, 201, 14);
+}
+
+.navbar-brand {
+	height: 90px;
+}
+
+.navber-nav li {
+	display: inline-block;
+}
+
+.navber-nav li a {
+	color: white;
+	font-weight: bold;
+}
+
+.navber-nav li a:hover {
+	color: black;
+}
+
+.navbar-footer {
+	background-color: rgb(255, 201, 14);
+	padding: 20px;
+	font-weight: bold;
+}
+
+.navbar-footer span {
+	margin-right: 20px;
+}
+
+.btn-light {
+	background-color: white;
+	color: black;
+	font-weight: bold;
+}
+
+.btn-dark {
+	background-color: black;
+	color: white;
+	font-weight: bold;
+}
+
+#container {
+	width: 700px;
+	border: 2px solid rgb(255, 201, 14);
+	background-color: white;
+	margin: 150px auto;
+	padding: 30px 20px;
+}
+
+table {
+	margin: 0 auto;
+}
+
+input[type=submit] {
+	border-radius: 5px;
+	margin: 0px auto;
+	color: white;
+}
+
+input[type=text], input[type=password] {
+	border-radius: 5px;
+}
+
+button {
+	color: black;
+	border-radius: 5px;
+	background-color: rgb(225, 201, 14);
+}
+
+h2 {
+	padding-bottom: 30px;
+}
+
+td {
+	padding: 5px 5px;
+}
+</style>
+<script type="text/javascript">
+function go() {
+	location.replace('myinfomodifyresult.html');
+}
+function main() {
+	location.replace('main.html');
+}
+function logout() {
+	location.replace('main.html');
+}
+function myinfo() {
+	location.replace('myinfo.html');
+}
+</script>
+
+</head>
+<body>
+	<header>
+		<div>
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+				<!-- 위의 노란색 부분 -->
+				<div class="container-fulid">
+					<div class="navbar-with-logo">
+						<div class="container">
+							<a class="navbar-brand" href="main.html"> <img src="../img/logo4.png"
+								alt="..." height="70px">
+							</a>
+							<div class="navbar-right" style="margin: 30px;">
+								<ul class="nav navbar-nav">
+									<li style="padding-right: 10px">
+										<button type="button" class="btn btn-light" onclick="logout()">로그아웃</button>
+									</li>
+									<li style="padding-right: 10px">
+										<button type="button" class="btn btn-dark" onclick="myinfo()">내 정보</button>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 아래 검정색 부분 -->
+				<div class="container">
+					<div class="navbar-header">
+						<!-- 모바일 상태에서 三아이콘:웹화면에서는 보이지 않음 -->
+						<!-- 크기가 작아질 경우, 메뉴를 아이콘 안으로 넣는다. span은 단추모양 지정.-->
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target=".navbar-ex11-collapse">
+							<!-- 아래 클래스 지정 -->
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<!-- 로고 -->
+					</div>
+					<div class="navbar-right navbar-ex11-collapse navber-collapse ">
+						<ul class="nav navber-nav">
+							<li><a href="footlist.html">상품 정보</a></li>
+							<li><a href="#">베스트 섭취 정보</a></li>
+							<li><a href="#">내 섭취 정보</a></li>
+							<li><a href="#">예상 섭취 정보</a></li>
+							<li><a href="#">공지 사항</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+	<div id="container">
+		<center>
+			<h2 style="font-weight: bold;">내 정보 수정</h2>
+		</center>
+
+		<table cellspacing="10">
+
+			<tr>
+				<td style="font-weight: bold;">아이디</td>
+				<td>kim6394</td>
+			</tr>
+			<tr>
+				<td style="font-weight: bold;">비밀번호</td>
+				<td><input type="password" placeholder="영문 숫자 포함 6자리 이상" /></td>
+			</tr>
+			<tr>
+				<td style="font-weight: bold;">이름</td>
+				<td><input type="text" placeholder="김규석" /></td>
+			</tr>
+			<tr>
+				<td style="font-weight: bold;">주소</td>
+				<td><input type="text" placeholder="서울특별시 강남구 도곡동 타워팰리스" size="70" /></td>
+			</tr>
+			<tr>
+				<td style="font-weight: bold;">알레르기</td>
+				<td><input type="checkbox">대두<input type="checkbox" checked>땅콩<input
+					type="checkbox">우유<input type="checkbox" checked>게</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="checkbox">새우<input type="checkbox">참치<input
+					type="checkbox">연어<input type="checkbox">쑥</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="checkbox">소고기<input type="checkbox">닭고기<input
+					type="checkbox">돼지고기</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="checkbox">복숭아<input type="checkbox">민들레<input
+					type="checkbox">계란흰자</td>
+			</tr>
+
+
+		</table>
+		<center>
+			<button type="button" onclick="go()">수정완료</button>
+			<button type="button" onclick="main()">메인으로</button>
+		</center>
+	</div>
+</body>
+<footer>
+	<nav class="navbar-footer navbar navbar-fixed-bottom" role="navigation">
+		<div class="navbar-left">
+			<p style="font-size: 20pt;">Find us</p>
+			<hr style="margin: 5px 0px;">
+			<span><img src="../img/telephone_icon.png" height="20pt">
+				010-1234-5678</span> <span><img src="../img/location_icon.png"
+				height="20pt"> 서울 강남구 테헤란로</span>
+		</div>
+	</nav>
+</footer>
+</html>
