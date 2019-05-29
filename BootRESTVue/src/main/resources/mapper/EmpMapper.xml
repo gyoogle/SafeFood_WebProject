@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 이 xml 파일과 짝을 이뤄서 진행되는 자바mapper의 패키지명을 작성해야함 -->
+<mapper namespace="com.mybatis.mapper.EmpMapper">
+
+	
+	<select id="selectAll" resultType="com.mybatis.vo.Emp">
+		select * from s_emp order by id
+	</select>
+	
+	<select id="selectOne" resultType="Emp" parameterType="String">
+		select * from s_emp where id = #{id}
+	</select>
+	
+	<insert id="insert" parameterType="Emp">
+		insert into s_emp (id, name) values(#{id}, #{name})
+	</insert>
+	
+	
+	<select id="findByName" parameterType="String" resultType="Emp">
+		select * from s_emp where name like #{name}
+	</select>
+
+</mapper>

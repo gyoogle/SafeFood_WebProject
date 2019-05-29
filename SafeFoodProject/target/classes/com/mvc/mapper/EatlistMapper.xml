@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.mvc.mapper.EatlistMapper">
+
+	<!-- 리절트 맵 정의. primary key 컬럼은 id 태그로 표시해줌 -->
+	
+<!-- 	fcode, mcode, ecode -->
+<!-- 	<resultMap id="EatResult" type="Eatlist">
+		<result column="fcode" property="fcode"/>
+		<result column="mcode" property="mcode"/>
+		<result column="ecode" property="ecode"/>
+	</resultMap> -->
+	
+	<resultMap type="Food" id="FoodResult">
+		<result column="fcode" property="id" />
+		<result column="name" property="name" />
+		<result column="maker" property="maker" />
+		<result column="material" property="ingredient" />
+		<result column="image" property="img" />
+		<result column="weight" property="supportpereat" />
+		<result column="calory" property="calory" />
+		<result column="carbo" property="carbo" />
+		<result column="protein" property="protein" />
+		<result column="fat" property="fat" />
+		<result column="sugar" property="sugar" />
+		<result column="natrium" property="natrium" />
+		<result column="chole" property="chole" />
+		<result column="fattyacid" property="fattyacid" />
+		<result column="transfat" property="transfat" />
+	</resultMap>
+	
+	<insert id="insert" parameterType="Eatlist">
+		insert into eat values(#{fcode}, #{mcode}, null); 	
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from eat where fcode = #{param2} and mcode = #{param1};
+	</delete>
+	
+	<select id="selectAll" resultType="Eatlist">
+		select * from eat
+	</select>
+	
+	<select id="selectMFoodList" resultType="String">
+		select * from eat where mcode = #{mcode};
+	</select>
+	
+	<select id="selectBest" resultMap="FoodResult">
+		select * from food JOIN (select fcode from eat group by fcode order by count(fcode) desc limit 3) d
+ON food.fcode In (d.fcode);
+	</select>
+	
+	<select id="hotFood" resultMap="FoodResult">
+		select * from food JOIN (select fcode from eat group by fcode order by count(fcode) desc limit 1) d
+	ON food.fcode In (d.fcode);
+	</select>
+	
+	<select id="TselectBest" resultMap="FoodResult" parameterType="String">
+        select * from food JOIN (select fcode from eat group by fcode order by count(fcode) desc) d
+ON food.fcode In (d.fcode) and food.tier &lt;= #{param1} order by d.fcode desc limit 3;
+    </select>
+    
+    <select id="ThotFood" resultMap="FoodResult" parameterType="String">
+		select * from food JOIN (select fcode from eat group by fcode order by count(fcode) desc limit 1) d
+	ON food.fcode In (d.fcode) and food.tier &lt;= #{param1};
+	</select>
+	
+	<select id="getcode" resultType="String" parameterType="String">
+        select fcode from eat where mcode = #{param1};
+    </select>
+</mapper>

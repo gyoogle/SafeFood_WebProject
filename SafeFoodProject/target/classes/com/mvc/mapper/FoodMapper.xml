@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.mvc.mapper.FoodMapper">
+
+	<resultMap type="Food" id="FoodResult">
+		<result column="fcode" property="id" />
+		<result column="name" property="name" />
+		<result column="maker" property="maker" />
+		<result column="material" property="ingredient" />
+		<result column="image" property="img" />
+		<result column="weight" property="supportpereat" />
+		<result column="calory" property="calory" />
+		<result column="carbo" property="carbo" />
+		<result column="protein" property="protein" />
+		<result column="fat" property="fat" />
+		<result column="sugar" property="sugar" />
+		<result column="natrium" property="natrium" />
+		<result column="chole" property="chole" />
+		<result column="fattyacid" property="fattyacid" />
+		<result column="transfat" property="transfat" />
+	</resultMap>
+	
+
+	<select id="selectAll" resultMap="FoodResult">
+		select * from food order by fcode
+	</select>
+
+	<select id="selectOne" resultMap="FoodResult"
+		parameterType="String">
+		select * from food where fcode = #{param1}
+	</select>
+
+	<insert id="insert" parameterType="Food">
+		insert into food
+		values(#{fcode}, #{name}, #{maker}, #{material}, #{weight}, #{calory}, #{carbo}, #{protein}, #{fat}, #{sugar},
+				#{natrium), #{chole}, #{fattyacid}, #{transfat})
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		delete from food where
+		fcode = #{fcode}
+	</delete>
+
+	<select id="search" resultMap="FoodResult"
+		parameterType="String">
+		select * from food where name like #{name} or material like #{material}
+	</select>
+	
+	<select id="getIngredient" resultType="String">
+		select material from food where fcode = #{param1}
+	</select>
+	
+	<select id="getAcode" resultType="String">
+    	select acode from allergy where ingredient = #{param1}
+    </select>
+	
+	<select id="newFood" resultMap="FoodResult">
+		select * from food order by fcode desc limit 1
+	</select>
+	
+	<select id ="Tsearch" resultMap="FoodResult">
+		select * from food where (name like #{param1} or material like #{param1}) and tier &lt;= #{param2}
+	</select>
+	
+	<select id ="TselectAll" resultMap="FoodResult">
+		select * from food where tier = #{param1}
+	</select>
+	
+	<select id ="TselectAll2" resultMap="FoodResult">
+		select * from food where tier &lt;= #{param1}
+	</select>
+	
+	<select id = "TnewFood" parameterType="String" resultMap="FoodResult">
+		select * from food where tier &lt;= #{param1} order by fcode desc limit 1
+	</select>
+</mapper>
+
+

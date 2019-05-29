@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.mybatis.mapper.MemberMapper">
+    
+   <!--  <resultMap type="Member" id="MemberResult">
+        <result column="id" property="id" />
+        <result column="password" property="password" />
+        <result column="name" property="name" />
+        <result column="mcode" property="allergy" />
+    </resultMap> -->
+
+    <resultMap type="Allergy" id="AllergyResult">
+        <result column="acode" property="acode" />
+        <result column="ingredient" property="ingredient" />
+    </resultMap>
+    
+    <resultMap type="AllergyList" id="AllergyListResult">
+        <result column="lcode" property="lcode" />
+        <result column="mcode" property="mcode" />
+        <result column="acode" property="acode" />
+    </resultMap>
+
+
+    <insert id="add" parameterType="Member">
+        insert into member values(#{id}, #{password}, #{name}, null, 1)
+    </insert>
+    
+	<select id="search" resultType="Member">
+        select * from member;
+    </select>
+
+    <select id="searchById" resultType="Member" parameterType="String">
+        select * from member where id = #{param1}
+    </select>
+
+    <select id="loginSuccess" resultType="int" parameterType="String">
+        select count(*) from member where id = #{param1} and password = #{param2}
+    </select>
+    
+<!--  추가한 부분 ================================ -->
+    <select id = "searchPassByMcode" resultType="String">
+        select password from member where mcode = #{param1}
+    </select>
+    <select id = "searchNameByMcode" resultType="String">
+        select name from member where mcode = #{param1}
+    </select>
+
+    <select id="searchMcodeById" resultType="String">
+        select mcode from member where id = #{param1}
+    </select>
+    
+    <select id="allAllergy" resultType="String">
+        select a.ingredient from allergy a where a.acode in (select acode from allergylist where mcode=#{param1})
+    </select>
+    
+    <insert id="addAllergyList" parameterType="String">
+    	insert into allergylist values(null, #{param1}, #{param2})
+    </insert>
+    <delete id="delete" parameterType="String">
+    	delete from member where MCODE = #{param1}
+    </delete>
+    <update id="updateByMcode">
+    	update member set mcode=#{param1} where id=#{param2}
+    </update>
+    
+    <update id="changePassword">
+    	update member set password=#{param2} where id=#{param1}
+    </update>
+    
+    <select id="searchTierByMcode" resultType="String" parameterType="String">
+    	select tier from member where mcode = #{param1}
+    </select>
+    
+    <update id="updateTier">
+    	update member set tier=#{param2} where id=#{param1}
+    </update>
+    
+    <update id="updateBypass">
+    	update member set password=#{param2} where id=#{param1}
+    </update>
+<!-- ================================ -->
+</mapper>

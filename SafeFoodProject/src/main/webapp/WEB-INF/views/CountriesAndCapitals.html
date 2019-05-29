@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+ <head>
+	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
+  <title>Country & Capital Quiz</title>
+  <script type="text/javascript">
+var varList = new Array(
+"Afghanistan","Kabul","Albania","Tirana","Algeria","Algiers","Andorra","Andorra la Vella","Angola","Luanda","Argentina","Buenos Aires","Armenia","Yerevan","Australia","Canberra","Austria","Vienna","Azerbaijan","Baku","Bahrain","Manama","Bangladesh","Dhaka","Barbados","Bridgetown","Belarus","Minsk","Belgium","Brussels","Belize","Belmopan","Benin","Porto-Novo","Bhutan","Thimphu","Bolivia","La Paz (administrative); Sucre (judicial)","Bosnia and Herzegovina","Sarajevo","Botswana","Gaborone","Brazil","Brasilia","Brunei","Bandar Seri Begawan","Bulgaria","Sofia","Burkina Faso","Ouagadougou","Burundi","Bujumbura","Cabo Verde","Praia","Cambodia","Phnom Penh","Cameroon","Yaoundé","Canada","Ottawa","Central African Republic","Bangui","Chad","N'Djamena","Chile","Santiago","China","Beijing","Colombia","Bogotá","Comoros","Moroni","Congo, Democratic Republic of the","Kinshasa","Congo, Republic of the","Brazzaville","Costa Rica","San Jose","Cote d'Ivoire","Yamoussoukro","Country","Capital city","Croatia","Zagreb","Cuba","Havana","Cyprus","Nicosia","Czech Republic","Prague","Denmark","Copenhagen","Djibouti","Djibouti (city)","Dominica","Roseau","Dominican Republic","Santo Domingo","Ecuador","Quito","Egypt","Cairo","El Salvador","San Salvador","Equatorial Guinea","Malabo","Eritrea","Asmara","Estonia","Tallinn","Ethiopia","Addis Ababa","Fiji","Suva","Finland","Helsinki","France","Paris","Gabon","Libreville","Gambia","Banjul","Georgia","Tbilisi","Germany","Berlin","Ghana","Accra","Greece","Athens","Grenada","St. George's","Guatemala","Guatemala City","Guinea","Conakry","Guinea-Bissau","Bissau","Guyana","Georgetown","Haiti","Port-au-Prince","Honduras","Tegucigalpa","Hungary","Budapest","Iceland","Reykjavik","India","New Delhi","Indonesia","Jakarta","Iran","Tehran","Iraq","Baghdad","Ireland","Dublin","Israel","Jerusalem","Italy","Rome","Jamaica","Kingston","Japan","Tokyo","Jordan","Amman","Kazakhstan","Astana","Kenya","Nairobi","Kiribati","South Tarawa","Kosovo","Pristina","Kuwait","Kuwait City","Kyrgyzstan","Bishkek","Laos","Vientiane","Latvia","Riga","Lebanon","Beirut","Lesotho","Maseru","Liberia","Monrovia","Libya","Tripoli","Liechtenstein","Vaduz","Lithuania","Vilnius","Luxembourg","Luxembourg","Macedonia","Skopje","Madagascar","Antananarivo","Malawi","Lilongwe","Malaysia","Kuala Lumpur","Maldives","Male","Mali","Bamako","Malta","Valletta","Marshall Islands","Majuro","Mauritania","Nouakchott","Mauritius","Port Louis","Mexico","Mexico City","Micronesia","Palikir","Moldova","Chisinau","Monaco","Monaco","Mongolia","Ulaanbaatar","Montenegro","Podgorica","Morocco","Rabat","Mozambique","Maputo","Myanmar (Burma)","Naypyidaw","Namibia","Windhoek","Nauru","Yaren District","Nepal","Kathmandu","Netherlands","Amsterdam","New Zealand","Wellington","Nicaragua","Managua","Niger","Niamey","Nigeria","Abuja","North Korea","Pyongyang","Norway","Oslo","Oman","Muscat","Pakistan","Islamabad","Palau","Ngerulmud","Palestine","Ramallah","Panama","Panama City","Papua New Guinea","Port Moresby","Paraguay","Asunción","Peru","Lima","Philippines","Manila","Poland","Warsaw","Portugal","Lisbon","Qatar","Doha","Romania","Bucharest","Russia","Moscow","Rwanda","Kigali","Saint Kitts and Nevis","Basseterre","Saint Lucia","Castries","Saint Vincent and the Grenadines","Kingstown","Samoa","Apia","San Marino","San Marino","Sao Tome and Principe","São Tomé","Saudi Arabia","Riyadh","Senegal","Dakar","Serbia","Belgrade","Seychelles","Victoria","Sierra Leone","Freetown","Singapore","Singapore","Slovakia","Bratislava","Slovenia","Ljubljana","Solomon Islands","Honiara","Somalia","Mogadishu","South Africa","Pretoria (administrative); Cape Town (legislative); Bloemfontein (judicial)","South Korea","Seoul","South Sudan","Juba","Spain","Madrid","Sri Lanka","Sri Jayawardenepura Kotte","Sudan","Khartoum","Suriname","Paramaribo","Swaziland","Mbabane","Sweden","Stockholm","Switzerland","Bern","Syria","Damascus","Taiwan","Taipei","Tajikistan","Dushanbe","Tanzania","Dodoma","Thailand","Bangkok","Timor-Leste","Dili","Togo","Lomé","Tonga","Nukuʻalofa","Trinidad and Tobago","Port of Spain","Tunisia","Tunis","Turkey","Ankara","Turkmenistan","Ashgabat","Tuvalu","Funafuti","Uganda","Kampala","Ukraine","Kyiv","United Arab Emirates","Abu Dhabi","United Kingdom","London","United States of America","Washington, D.C.","Uruguay","Montevideo","Uzbekistan","Tashkent","Vanuatu","Port Vila","Vatican City (Holy See)","Vatican City","Venezuela","Caracas","Vietnam","Hanoi","Yemen","Sana'a","Zambia","Lusaka","Zimbabwe","Harare"
+)
+/*================================*/
+var ansNumber; //전역변수 정답 번호 
+
+function genNewQ() {
+	var country = document.getElementById('country');
+	var caps= document.getElementsByName('caps');
+	var spanAnswer= document.getElementById('ansNum');
+	var wrongNumStr=''; 
+	var varSplit;
+	var cnt=0;
+	var ansCountry;
+	var ansCapital;
+
+	n = varList.length; //country-capital 배열 전체 원소 개수
+	pairCnt = n/2; //country - capital pair 개수, 배열 전체 원소 수를 2로 나눔.
+	capsCnt =caps.length; // 보기의 개수
+
+	rndNum = randBetween(1, pairCnt); //리스트에서 무작위 1개 숫자 추출 ★★★
+	ansNumber = randBetween(1, caps.length);  //	answer Number
+		ansCountry=varList[(rndNum-1)*2]; //answer country
+		ansCapital=varList[(rndNum-1)*2+1]; //answer country
+
+	country.innerText= ansCountry; //정답 country print
+	caps[ansNumber-1].innerText = ansCapital; //answer capital print
+	/*******************오답 프린트******************/
+	wrongNumStr = getRandNums(1, pairCnt, capsCnt-1, rndNum); // 오답보기개수만큼 오답배열 뽑기, 정답으로 쓸 ★★★숫자는 제외
+	varSplit = wrongNumStr.split(",");  //오답 무작위 숫자 스트링을 , 로 쪼갬
+
+	for (i=0;i<capsCnt;i++) {//보기를 순환하며 작업
+		if (i!=(ansNumber-1)) {// 보기 넘버가 정답번호가 아니라면,			
+			caps[i].innerText = varList[(varSplit[cnt]-1)*2+1]; //오답 보기 칸에 오답 프린트
+			cnt++;
+		}
+		caps[i].style.fontWeight = 'bold';
+		caps[i].style.color = '#FFFFFF';
+		caps[i].style.fontSize= '15pt';
+	}	
+	/*******************정답 프린트******************/
+		spanAnswer.innerText = ansNumber; //print Answer Number
+		document.getElementById('guide').innerText ='';
+}
+/*================================*/
+function randBetween(min, max) {
+		return Math.floor((Math.random()*(max-min+1))+min);
+}
+/*================================*/
+function getRandNums(min, max, howmany, excludedNum) {
+	/*		getRandNums(1, 50, 3, 39) => 1에서 50까지, 3개 숫자뽑아라, 39를 제외해라. 	*/
+	var v = new Array(); 
+		v[0] = excludedNum; //제외할 숫자를 미리 넣어 두기
+	var cnt=1; //배열 카운트 0번을 제외한 1부터 시작
+	var sReturn='';
+		/**************************************/	
+	while (cnt<=howmany) {//뽑아야 할 개수가 다 찰 동안 루프 순환
+		rndN = randBetween(min, max); //구간 내에서 무작위 수 1개 추출
+			if (v.indexOf(rndN)==-1) {//기존에 뽑히지 않았다면,
+				v[cnt] = rndN; //배열에 기존과 중복되지 않는 무작위 수 1개 추가
+				cnt++; //배열 카운트 추가
+			}
+		}
+		/**************************************/
+		for (i=1;i<v.length;i++) {//배열 1번부터 리턴 스트링 조인
+			sReturn += v[i]+',';		
+		}
+		return sReturn.substr(0,sReturn.length-1); //마지막 , 를 제외한 문자열 최종 리턴
+}
+/*================================*/
+function checkAnswer(refNum) {
+	var caps = document.getElementsByName('caps'); //보기 요소 배열
+	var guide= document.getElementById('guide'); 
+
+	if (refNum==ansNumber) {//현재 보기 번호와, 정답번호 일치하면
+		caps[refNum-1].style.fontWeight = 'bold';
+		caps[refNum-1].style.fontSize = '20pt';
+		caps[refNum-1].style.color = '#ccffff';
+		guide.innerText = 'Correct!';
+		guide.style.color = '#ff33cc';
+	} else {
+		caps[refNum-1].style.color= '#cc0066';
+		guide.innerText = 'Wrong!';
+		guide.style.color = '#FFFFFF';
+	}
+}
+function showAns() {
+	var answerCap = document.getElementsByName('caps')[ansNumber-1];
+	answerCap.style.fontWeight = 'bold';
+	answerCap.style.color = '#ccffff';
+	answerCap.style.fontSize= '20pt';
+	document.getElementById('guide').innerText='The answer is '+ansNumber+'!'; 
+}
+  </script>
+  <style type="text/css">
+	body {line-height:40px;background-color:#2a2a2a;}
+.coun {
+		background-color:#f7d9ff;
+		border:1px solid #444;
+		padding-left:8px;
+		color:#000000;
+		font-weight:bold;
+		font-size:18pt;
+	}
+.cap{		
+		color:#FFFFFF;
+		font-size:15pt;
+}
+.num {
+		font-weight:bold;
+		color:#FFFFFF;
+}
+#guide {		font-weight:bold;		color:#FFFFFF; font-size:18pt;}
+#ansNum {color:#2a2a2a;}
+#btn_new {
+	width:200px; height:30px;
+	font-size:13pt;
+} 
+#btn_answer {
+	width:50px; height:30px;
+	font-size:10pt;
+} 
+.qDirect {
+	font-size:11pt;
+	color:#ffffff;
+}
+  </style>
+ </head>
+ <body>
+<input type="button" id="btn_new" value="new question" onclick="genNewQ();">
+&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" id="btn_answer" value="A" onclick="showAns();"><br>
+<span class="qDirect">Find the capital of a given country.</span>
+<div id="country" class="coun">READY?</div>
+<span class="num">1.</span> <span name="caps" class="cap" onclick="checkAnswer(1);"></span><br>
+<span class="num">2.</span> <span name="caps" class="cap" onclick="checkAnswer(2);"></span><br>
+<span class="num">3.</span> <span name="caps" class="cap" onclick="checkAnswer(3);"></span><br>
+<span class="num">4.</span> <span name="caps" class="cap" onclick="checkAnswer(4);"></span><br>
+<span class="num">5.</span> <span name="caps" class="cap" onclick="checkAnswer(5);"></span><br>
+<span class="num">6.</span> <span name="caps" class="cap" onclick="checkAnswer(6);"></span>
+<hr>
+<span id="guide"></span>
+<span id="ansNum"></span>
+ </body>
+</html>

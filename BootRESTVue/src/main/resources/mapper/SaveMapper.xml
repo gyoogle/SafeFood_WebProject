@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 이 xml 파일과 짝을 이뤄서 진행되는 자바mapper의 패키지명을 작성해야함 -->
+<mapper namespace="com.mybatis.mapper.SaveMapper">
+
+	<!-- 리절트 맵 정의. primary key 컬럼은 id 태그로 표시해줌 -->
+	<resultMap id="SaveResult" type="Save">
+		<result column="scode" property="scode"/>
+		<result column="mcode" property="mcode"/>
+		<result column="fcode" property="fcode"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="SaveResult">
+		select * from save order by scode
+	</select>
+	
+	<select id="selectOne" resultMap="SaveResult" parameterType="String">
+		select * from save where scode = #{scode}
+	</select>
+	
+	<insert id="insert" parameterType="Save">
+		insert into save values(#{fcode}, #{mcode}, null)
+	</insert>
+	
+	
+	<delete id="delete" parameterType="String">
+		delete from save where fcode = #{param1} and mcode = #{param2};
+	</delete>
+	
+	<select id="selectMFoodList" resultType="String">
+		select fcode from save where mcode = #{mcode};
+	</select>
+	
+</mapper>

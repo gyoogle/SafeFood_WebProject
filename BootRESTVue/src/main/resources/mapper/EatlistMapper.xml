@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.mybatis.mapper.EatlistMapper">
+
+	<!-- 리절트 맵 정의. primary key 컬럼은 id 태그로 표시해줌 -->
+	
+<!-- 	fcode, mcode, ecode -->
+<!-- 	<resultMap id="EatResult" type="Eatlist">
+		<result column="fcode" property="fcode"/>
+		<result column="mcode" property="mcode"/>
+		<result column="ecode" property="ecode"/>
+	</resultMap> -->
+	
+	<insert id="insert" parameterType="Eatlist">
+		insert into eat values(#{fcode}, #{mcode}, null); 	
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from eat where fcode = #{param2} and mcode = #{param1};
+	</delete>
+	
+	<select id="selectAll" resultType="Eatlist">
+		select * from eat
+	</select>
+	
+	<select id="selectMFoodList" resultType="String">
+		select fcode from eat where mcode = #{mcode};
+	</select>
+	
+	<select id="selectMFoodMaterial" resultType="String">
+        select material from food where fcode in (select fcode from eat where mcode = #{param1});
+    </select>
+</mapper>

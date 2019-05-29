@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 이 xml 파일과 짝을 이뤄서 진행되는 자바mapper의 패키지명을 작성해야함 -->
+<mapper namespace="com.mybatis.mapper.CustomerMapper">
+
+	<!-- myBatis가 이용하는 query문장이 들어 있는 파일 java Mapper에 의해 이용됨. java Mapper - 
+		xml Mapper - myBatis java Mapper안에 있는 메소드 이름과 xml Mapper 안의 query id가 일치해야 
+		함. -->
+
+	<!-- 리절트 맵 정의. primary key 컬럼은 id 태그로 표시해줌 -->
+	<resultMap id="CustomerResult" type="Customer">
+		<result column="num" property="num"/>
+		<result column="name" property="name"/>
+		<result column="address" property="address"/>
+	</resultMap>
+
+	<select id="selectAll" resultMap="CustomerResult">
+		select * from customer order by num
+	</select>
+	
+	<select id="selectOne" resultMap="CustomerResult" parameterType="String">
+		select * from customer where num = #{num}
+	</select>
+	
+	<insert id="insert" parameterType="Customer">
+		insert into customer values(#{num}, #{name}, #{address})
+	</insert>
+	
+	<insert id="insert2" parameterType="java.util.Map">
+		insert into customer values(#{num}, #{name}, #{address})
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from customer where num = #{num}
+	</delete>
+	
+	<update id="update" parameterType="Customer">
+		update customer set name = #{name}, address = #{address} where num = #{num} 
+	</update>
+	
+	<select id="findByAddress" resultMap="CustomerResult" parameterType="String">
+		select * from customer where address = #{address}
+	</select>
+
+</mapper>
