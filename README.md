@@ -191,3 +191,5 @@ CRUD기능을 갖춘 게시판 구현
 
 ![arab_list.PNG](https://github.com/kim6394/SafeFood_WebProject/blob/master/%EC%BA%A1%EC%B3%90%ED%99%94%EB%A9%B4/arab_list.PNG?raw=true)
 
+
+> 시연 동영상 : [링크](https://www.youtube.com/watch?v=hEuGyG2O2eo&feature=youtu.be)
